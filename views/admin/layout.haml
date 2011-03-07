@@ -1,0 +1,26 @@
+!!! 5
+%html{:lang => 'en'}
+  %head
+    %meta{:charset => 'utf-8'}/
+    %meta{:name => "viewport", :content => 'width=device-width; initial-scale=1.0; maximum-scale=1.0;'}/
+    %title= page_title
+    %link{:rel => 'stylesheet', :href => css_link('reset')}/
+    %link{:rel => 'stylesheet', :href => css_link('admin')}/
+    = haml :'/../shared/_iescripts', :layout => false
+  %body
+    %header
+      %h1= page_title
+    %nav
+      %ul
+        %li
+          %a{:href => home_link()} Home
+        %li
+          %a{:href => setting_link()} Settings
+        %li
+          %a{:href => pages_link()} Pages
+        %li
+          %a{:href => posts_link()} Posts
+        %li
+          %a{:href => tags_link()} Topics
+    %div
+      = yield

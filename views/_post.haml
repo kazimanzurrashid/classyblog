@@ -1,0 +1,14 @@
+%article.hentry{:role => 'article'}
+  %header.xfolkentry
+    %h1.entry-title
+      %a.taggedlink{:href => post_link(post.slug), :rel => 'bookmark'}= post.title
+    %p.entry-meta{:role => 'contentinfo'}
+      %time.updated.published{:datetime => post.published_at_in_short_format, :pubdate => true}= post.published_at_in_long_format
+      - unless @setting.disqus_short_name.blank?
+        %span &ndash;
+        %a{:href => "#{post_link(post.slug)}#disqus_thread"} comments
+  .entry-content
+    %div
+      = post.summary
+    .continue
+      %a{:href => post_link(post.slug), :title => "Read the full post"} continue &raquo;

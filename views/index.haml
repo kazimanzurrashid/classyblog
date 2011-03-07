@@ -1,0 +1,13 @@
+%section#home.articles.hfeed
+  - @posts.each do |post|
+    = haml :_post, :layout => false, :locals => {:post => post}
+  .more
+    %a{:href => archive_link(1)} older posts &raquo;
+= haml :_commentsScript, :layout => false
+- content_for :scripts do
+  /[if lt IE 9]
+    %script
+      :plain
+        $(function() {
+          $('#home article:nth-child(2n)').css({ 'margin-right' : '2em' });
+        });

@@ -1,0 +1,30 @@
+!!! XML
+%feed{:xmlns => 'http://www.w3.org/2005/Atom'}
+  %title= @setting.blog_title
+  - unless @setting.tag_line.blank?
+    %subtitle= @setting.tag_line
+  %link{:href => "#{root()}/"}
+  %link{:href => absolute(feed_link()), :rel => 'self'}
+  %id= "#{root()}/"
+  %rights= "Copyright (c) #{Time.now.year} #{@setting.user_full_name}. The content on this feed is licensed under Creative Commons Attribution 3.0 License."
+  %generator{:uri => ClassyBlog::ApplicationInfo::Home, :version => ClassyBlog::ApplicationInfo::Version}= ClassyBlog::ApplicationInfo::Name
+  %icon= absolute('favicon.ico')
+  - unless @posts.empty?
+    %updated= @posts[0].published_at.strftime('%Y-%m-%dT%H:%M:%S%z')
+  %author
+    %name= @setting.user_full_name
+    - unless @setting.user_email.blank?
+      %email= @setting.user_email
+  - @posts.each do |post|
+    %entry
+      %title= post.title
+      %link{:rel => 'alternate', :href => absolute(post_link(post.slug))}
+      %id= absolute(post_link(post.slug))
+      %published= post.published_at.strftime('%Y-%m-%dT%H:%M:%S%z')
+      %updated= post.published_at.strftime('%Y-%m-%dT%H:%M:%S%z')
+      %author
+        %name= @setting.user_full_name
+      %content{:type => 'html'}
+        = h post.content
+      - post.tags.each do |tag|
+        %category{:term => tag.title, :label => tag.title, :scheme => absolute(tag_link(tag.slug))}

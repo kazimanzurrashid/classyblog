@@ -1,0 +1,122 @@
+!!! 5
+%html{:lang => 'en', :dir => 'ltr', :class => 'no-js'}
+  %head
+    %meta{:charset => 'utf-8'}/
+    - unless @setting.meta_keywords.blank?
+      %meta{:name => 'keywords', :content => @setting.meta_keywords}/
+    - unless @setting.meta_description.blank?
+      %meta{:name => 'description', :content => @setting.meta_description}/    
+    %meta{:name => 'author', :content => @setting.user_full_name}/
+    %meta{:name => 'copyright', :content => @setting.user_full_name}/
+    %meta{:name => 'generator', :content => ClassyBlog::ApplicationInfo::Full_Name}/
+    %meta{:name => 'viewport', :content => 'width=device-width; initial-scale=1.0; maximum-scale=1.0;'}/
+    %title= page_title
+    %link{:rel => 'stylesheet', :href => 'http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold'}/
+    %link{:rel => 'stylesheet', :media => 'screen', :href => css_link('reset')}/
+    %link{:rel => 'stylesheet', :media => 'screen', :href => css_link('site')}/
+    = yield_content :styles
+    %link{:rel => 'stylesheet', :media => 'only screen and (max-device-width: 480px), only screen and (max-width: 480px), only screen and (max-device-width: 640px), only screen and (max-width: 640px)', :href => css_link('mobile')}/
+    %link{:rel => 'stylesheet', :media => 'handheld', :href => css_link('handheld')}/
+    %link{:rel => 'EditURI', :href => rsd_link(), :type => 'application/rsd+xml', :title=> 'RSD'}/
+    %link{:rel => 'wlwmanifest', :href => wlwmanifest_link(), :type => 'application/wlwmanifest+xml', :title=> 'WLWManifest'}/
+    %link{:rel => 'alternate', :href => public_feed_link(), :type => 'application/atom+xml', :title=> "#{@setting.blog_title} Feed"}/
+    %link{:rel => 'shortcut icon', :href => image_link('favicon.ico')}/
+    %link{:rel => 'apple-touch-icon', :href => image_link('apple-touch-icon.png')}/
+    %script{:src => js_link('modernizr-1.6')}
+    - unless @setting.typekit_code.blank?
+      %script{:src => "http://use.typekit.com/#{@setting.typekit_code}.js"}
+      %script
+        try{Typekit.load();}catch(e){}
+    %script{:src => 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'}
+    %script
+      :plain
+        !window.jQuery && document.write('<script src="#{js_link('jquery-1.4.4')}"><\/script>')
+    = haml :'shared/_iescripts', :layout => false
+  %body
+    #wrapper
+      #container
+        %header{:role => 'banner'}
+          %hgroup
+            %h1= @setting.blog_title
+            - unless @setting.tag_line.blank?
+              %h2= @setting.tag_line
+        %nav{:role => 'navigation'}
+          %ul
+            %li
+              %a{:href => home_link(), :rel => 'home'} Home
+            %li
+              %a{:href => archive_link(), :rel => 'archives'} Archive
+            - unless @setting.user_email.blank?
+              %li
+                %a{:href => contact_link()} Contact
+          %ul
+            - if @setting.feed_burner_url.blank?
+              %li
+                %a{:href => public_feed_link(), :rel => 'alternate'} Subscribe to my feed
+            - else
+              %li
+                %a{:href => public_feed_link(), :rel => 'alternate', :title => "#{@feed_reader_count} readers"} Subscribe to my feed
+            - unless @setting.twitter_handle.blank?
+              %li
+                %a{:href => "http://twitter.com/#!/#{@setting.twitter_handle}", :rel => 'me', :title => "#{@twitter_follower_count} followers"} Follow me on Twitter
+        %div{:role => 'main'}
+          = yield
+        %footer
+          #topics
+            %h2 Topics
+            - unless @tags.empty?
+              %ol
+                - @tags.each do |tag|
+                  %li
+                    %a{:href => tag_link(tag.slug), :rel => 'tag'}= "#{tag.title} (#{tag.posts_count})"
+            %form{:action => search_link(), :method => 'get', :role => 'search'}
+              %fieldset
+                %legend Search
+                %label{:for => "q"} Query
+                %input#q{:name => "q", :type => 'search', :size => '22', :required => true, :placeholder => 'Type your text...'}/
+                %input#page{:name => 'page', :type => 'hidden', :value => '1'}/
+                %button{:type => 'submit'} go
+          #sponsors
+            %h2 Sponsors
+            %div
+              %ul
+                %li
+                  %div
+                    .lqm_ad{:lqm_channel => '1', :lqm_publisher => '293', :lqm_zone => '88', :lqm_format => '20'}
+                    %a{:href => 'http://lakequincy.com?1'}
+                      %small Ads by Lake Quincy Media
+          #bio
+            %h2 About me
+            %p.vcard= @setting.user_bio
+          #copyright
+            %p
+              Copyright &copy; #{Time.now.year} #{@setting.user_full_name}. Powered by 
+              %a{:href => ClassyBlog::ApplicationInfo::Home}= ClassyBlog::ApplicationInfo::Name
+              \- Made in Bangladesh.
+            %p
+              The content on this site is licensed under
+              %a{:href => 'http://creativecommons.org/licenses/by/3.0/', :rel => 'license'} Creative Commons Attribution 3.0 License.
+    %script{:src => js_link('jquery.tools.tooltip')}
+    %script
+      :plain
+        $(function() {
+          $('a[title]').tooltip({position: 'bottom center', offset: [5, 0]});
+        });
+    = yield_content :scripts
+    %script{:src => 'http://s1.lqcdn.com/m.min.js?dt=2.3.110104.1'}
+    %script
+      :plain
+        if ($.LqmAds) {
+          $.LqmAds();
+        }
+    - unless @setting.google_analytics_code.blank?
+      %script
+        :plain
+          var _gaq = [['_setAccount', "#{@setting.google_analytics_code}"], ['_trackPageview']];
+          (function(d, t) {
+            var g = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+            g.async = true;
+            g.src = '//www.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g, s);
+          })(document, 'script');

@@ -1,0 +1,23 @@
+.searchResult
+  - if defined?(@sub_title)
+    %h2= @sub_title
+  -unless @error_message.blank?
+    .notification.error
+      %span
+        %strong Error!
+        =@error_message
+  -else        
+    - if @posts.empty?
+      %p Did not find any result.
+    -else
+      %ol
+        - @posts.each do |post|
+          %li
+            %h3
+              %a{:href => post['Url']}= post['Title']
+      - if defined?(@previous_link) || defined?(@next_link) && (!@previous_link.blank? || !@next_link.blank?)
+        .pageNav
+          -unless @previous_link.blank?
+            %a{:href => @previous_link, :class => "previous", :title => "Previous results"} Previous
+          -unless @next_link.blank?
+            %a{:href => @next_link, :class => "next", :title => "Next results"} Next

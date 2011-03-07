@@ -1,0 +1,13 @@
+body
+{
+	background: #efefef;
+	font: 12px/1.7em arial, sans-serif;
+	min-height: 1063px;
+}
+
+#wrapper
+{
+	margin: 0 auto 150px;
+	width: 100%;
+	min-width: 960px;
+}

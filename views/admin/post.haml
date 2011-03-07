@@ -1,0 +1,33 @@
+%h1 Post
+#post
+  %form{:action => '', :method => 'post' }
+    %ul
+      %li
+        %label{:for => 'title'} Title
+        %input#title{:name => 'title', :type => 'text', :size => '22', :maxlength => '256', :required => true, :placeholder => 'Title...', :autofocus => true, :value => @post.title}/
+        = field_validation(@post, :title)
+      %li
+        %label{:for => 'slug'} Slug
+        %input#slug{:name => 'slug', :type => 'text', :size => '22', :maxlength => '256', :placeholder => 'Slug...', :value => @post.slug}/
+        = field_validation(@post, :slug)
+      %li
+        %label{:for => 'content'} Content
+        %textarea#content{:name => 'content', :rows => '10', :col => '100', :required => true, :placeholder => 'Content...'}
+          :preserve
+          != @post.content
+        = field_validation(@post, :content)
+      %li
+        %label{:for => 'published_at'} Published on
+        %input#published_at{:name => 'published_at', :type => 'date', :size => '22', :placeholder => 'Publish date...', :value => @post.published_at.nil? ? '' : @post.published_at_in_short_format}/
+        = field_validation(@post, :published_at)
+      %li
+        %label{:for => 'tags'} Topics
+        %input#tags{:name => 'tags', :type => 'text',:value => @post.tags.map(&:title).join(', ')}/
+      %li
+        %label{:for => 'excerpt'} Excerpt
+        %textarea#excerpt{:name => 'excerpt', :rows => '10', :col => '100', :maxlength => 512, :placeholder => 'Excerpt...'}= @post.excerpt
+        = field_validation(@post, :excerpt)
+      %li
+        %button{:type => 'submit'} Save
+        %span or
+        %a{:href => admin_link()} Cancel

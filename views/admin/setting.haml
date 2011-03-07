@@ -1,0 +1,117 @@
+%h1 Setting
+#setting
+  %form{:action => '', :method => 'post' }
+    %fieldset
+      %legend Blog
+      %ul
+        %li
+          %label{:for => 'blog_title'} Blog Title (required)
+          %input#blog_title{:name => 'blog_title', :type => 'text', :size => '22', :maxlength => '256', :required => true, :placeholder => 'Blog Title...', :autofocus => true, :value => @editSetting.blog_title}/
+          = field_validation(@editSetting, :blog_title)
+        %li
+          %label{:for => 'tag_line'} Tagline (optional)
+          %input#tag_line{:name => 'tag_line', :type => 'text', :size => '22', :maxlength => '256', :placeholder => 'Tagline...', :value => @editSetting.tag_line}/
+          = field_validation(@editSetting, :tag_line)
+        %li
+          %label{:for => 'meta_keywords'} Metakeywords (optional)
+          %textarea#meta_keywords{:name => 'meta_keywords', :rows => '10', :col => '100', :maxlength => '512', :placeholder => 'Metakeywords...'}= @editSetting.meta_keywords
+          = field_validation(@editSetting, :meta_keywords)
+        %li
+          %label{:for => 'meta_description'} Metadescription (optional)
+          %textarea#meta_description{:name => 'meta_description', :rows => '10', :col => '100', :maxlength => '512', :placeholder => 'Metadescription...'}= @editSetting.meta_description
+          = field_validation(@editSetting, :meta_description)
+        %li
+          %label{:for => 'items_per_page'} Posts per Page (required)
+          %input#items_per_page{:name => 'items_per_page', :type => 'number', :required => true, :min => 5, :max => 20, :step => 5,:value => @editSetting.items_per_page}/
+          = field_validation(@editSetting, :items_per_page)
+        %li
+          %label{:for => 'posts_in_home'} Posts in Home (required)
+          %input#posts_in_home{:name => 'posts_in_home', :type => 'number', :required => true, :min => 5, :max => 25, :step => 2,:value => @editSetting.posts_in_home}/
+          = field_validation(@editSetting, :posts_in_home)
+        %li
+          %label{:for => 'cache_duration_in_seconds'} Cache Duration in Seconds (required)
+          %input#cache_duration_in_seconds{:name => 'cache_duration_in_seconds', :type => 'number', :required => true, :min => 0, :max => 300000, :step => 30, :value => @editSetting.cache_duration_in_seconds}/
+          = field_validation(@editSetting, :cache_duration_in_seconds)          
+    %fieldset
+      %legend User
+      %ul
+        %li
+          %label{:for => 'login'} Login (required)
+          %input#login{:name => 'login', :type => 'text', :size => '22', :maxlength => '128', :required => true, :placeholder => 'Login name...', :value => @editSetting.login}/
+          = field_validation(@editSetting, :login)
+        %li
+          %label{:for => 'password'} Password (required)
+          %input#password{:name => 'password', :type => 'password', :size => '22', :maxlength => '32', :required => true}/
+          = field_validation(@editSetting, :password)
+        %li
+          %label{:for => 'user_full_name'} Full name (required)
+          %input#user_full_name{:name => 'user_full_name', :type => 'text', :size => '22', :maxlength => '256', :required => true, :placeholder => 'Full name...', :value => @editSetting.user_full_name}/
+          = field_validation(@editSetting, :user_full_name)
+        %li
+          %label{:for => 'user_email'} Email (optional)
+          %input#user_email{:name => 'user_email', :type => 'email', :size => '22', :maxlength => '256', :required => true, :placeholder => 'Email...', :value => @editSetting.user_email}/
+          = field_validation(@editSetting, :user_email)
+        %li
+          %label{:for => 'user_bio'} Bio (optional)
+          %textarea#user_bio{:name => 'user_bio', :rows => '10', :col => '100', :maxlength => '2048', :placeholder => 'Bio...'}= @editSetting.user_bio
+          = field_validation(@editSetting, :user_bio)
+    %fieldset
+      %legend Amazon S3
+      %ul
+        %li
+          %label{:for => 'aws_access_key_id'} Access Key Id
+          %input#aws_access_key_id{:name => 'aws_access_key_id', :type => 'text', :size => '22', :maxlength => '256', :placeholder => 'Access key...', :autocomplete => false, :value => @editSetting.aws_access_key_id}/
+          = field_validation(@editSetting, :aws_access_key_id)
+        %li
+          %label{:for => 'aws_secret_access_key'} Secret Key
+          %input#aws_secret_access_key{:name => 'aws_secret_access_key', :type => 'text', :size => '22', :maxlength => '256', :placeholder => 'Secret key...', :autocomplete => false, :value => @editSetting.aws_secret_access_key}/
+          = field_validation(@editSetting, :aws_secret_access_key)
+        %li
+          %label{:for => 'aws_bucket'} Bucket
+          %input#aws_bucket{:name => 'aws_bucket', :type => 'text', :size => '22', :maxlength => '256', :placeholder => 'Bucket name...', :value => @editSetting.aws_bucket}/
+          = field_validation(@editSetting, :aws_bucket)
+        %li
+          %label{:for => 'aws_cdn_prefix'} Cdn Prefix
+          %input#aws_path{:name => 'aws_cdn_prefix', :type => 'text', :size => '22', :maxlength => '256', :placeholder => 'cdn.yourdomain.com', :value => @editSetting.aws_cdn_prefix}/
+          = field_validation(@editSetting, :aws_cdn_prefix)
+    %fieldset
+      %legend Google
+      %ul
+        %li
+          %label{:for => 'google_analytics_code'} Analytics code
+          %input#google_analytics_code{:name => 'google_analytics_code', :type => 'text', :size => '22', :maxlength => '24', :placeholder => 'UA-XXXXXXX-X', :value => @editSetting.google_analytics_code}/
+          = field_validation(@editSetting, :google_analytics_code)
+        %li
+          %label{:for => 'feed_burner_url'} Feedburner Url
+          %input#feed_burner_url{:name => 'feed_burner_url', :type => 'url', :size => '22', :maxlength => '1024', :placeholder => 'http://feeds.feedburner.com/XXXXXX', :value => @editSetting.feed_burner_url}/
+          = field_validation(@editSetting, :feed_burner_url)
+    %fieldset
+      %legend Bing
+      %ul
+        %li
+          %label{:for => 'bing_app_id'} App Id
+          %input#bing_app_id{:name => 'bing_app_id', :type => 'text', :size => '22', :maxlength => '64', :placeholder => 'App Id...', :value => @editSetting.bing_app_id}/
+          = field_validation(@editSetting, :bing_app_id)
+    %fieldset
+      %legend Disqus
+      %ul
+        %li
+          %label{:for => 'disqus_short_name'} Short name
+          %input#disqus_short_name{:name => 'disqus_short_name', :type => 'text', :size => '22', :maxlength => '256', :placeholder => 'Short name...', :value => @editSetting.disqus_short_name}/
+          = field_validation(@editSetting, :disqus_short_name)
+    %fieldset
+      %legend TypeKit
+      %ul
+        %li
+          %label{:for => 'typekit_code'} Code
+          %input#typekit_code{:name => 'typekit_code', :type => 'text', :size => '22', :maxlength => '256', :placeholder => 'xxxxxxx', :value => @editSetting.typekit_code}/
+          = field_validation(@editSetting, :typekit_code)
+    %fieldset
+      %legend Twitter
+      %ul
+        %li
+          %label{:for => 'twitter_handle'} User name
+          %input#twitter_handle{:name => 'twitter_handle', :type => 'text', :size => '22', :maxlength => '256', :placeholder => 'User name...', :value => @editSetting.twitter_handle}/
+          = field_validation(@editSetting, :twitter_handle)
+    %p
+      %button{:type => 'submit'} Submit

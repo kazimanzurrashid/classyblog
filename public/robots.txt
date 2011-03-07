@@ -1,0 +1,3 @@
+user-agent: *
+sitemap: http://kazimanzurrashid.com/api/sitemap.xml
+allow: /

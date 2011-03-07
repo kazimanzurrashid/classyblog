@@ -1,0 +1,12 @@
+%section#list.articles.hfeed
+  - if defined?(@sub_title)
+    %h2= @sub_title
+  - @posts.each do |post|
+    = haml :_post, :layout => false, :locals => {:post => post}
+- if defined?(@next_link) && defined?(@previous_link) && (!@previous_link.blank? || !@next_link.blank?)
+  .pageNav
+    -unless !@previous_link.blank?
+      %a{:href => @previous_link, :class => "previous", :title => 'Newer posts'} Newer
+    -unless !@next_link.blank?
+      %a{:href => @next_link, :class => "next", :title => 'Older posts'} Older
+= haml :_commentsScript, :layout => false

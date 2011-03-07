@@ -1,0 +1,8 @@
+%article.article{:role => 'article'}
+  %header
+    %h1= @page.title
+  %div= @page.content
+  %footer{:role => 'contentinfo'}
+    %span This page was published on
+    %time{:datetime => @page.published_at_in_short_format, :pubdate => true}= @page.published_at_in_long_format
+    %span= "by #{@setting.user_full_name}."

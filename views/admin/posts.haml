@@ -1,0 +1,18 @@
+%h1 Posts
+- unless @drafts.empty?
+  %section#drafts
+    %h2 Drafts
+    %ol
+      - @drafts.each do |post|
+        %li
+          %a{:href=> edit_post_link(post.id)}= post.title
+- unless @recents.empty?
+  %section#published
+    %h2 Recent
+    %ol
+      - @recents.each do |post|
+        %li
+          %span= post.published_at_in_medium_format
+          %a{:href=> edit_post_link(post.id)}= post.title
+%p
+  %a{:href => new_post_link()} New

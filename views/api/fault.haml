@@ -1,0 +1,13 @@
+!!! XML
+%methodResponse
+  %fault
+    %value
+      %struct
+        %member
+          %name faultCode
+          %value
+            %int= @fault_code
+        %member
+          %name faultString
+          %value
+            %string= @fault_string

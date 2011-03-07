@@ -1,0 +1,14 @@
+#archive
+  %section#recent
+    %h2 Recent Posts
+    %ol
+      - @posts.each do |post|
+        %li.xfolkentry
+          %time{:datetime => post.published_at_in_short_format, :pubdate => true }= post.published_at_in_medium_format
+          %a.taggedlink{:href=> post_link(post.slug), :rel => 'bookmark'}= post.title
+  %section#monthly
+    %h2 Monthly Archive
+    %ol
+      - @archives.each do |archive|
+        %li
+          %a{:href => monthly_archive_link(archive.month, archive.year), :rel => 'directory'}= "#{archive.full_month_name} #{archive.year} (#{archive.posts_count})"

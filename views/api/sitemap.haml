@@ -1,0 +1,20 @@
+!!! XML
+%urlset{:xmlns => 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+  -@posts.each do |post|
+    %url
+      %loc= absolute(post_link(post.slug))
+      %lastmod= post.published_at.strftime('%Y-%m-%d')
+  -@pages.each do |page|
+    %url
+      %loc= absolute(page_link(page.slug))
+      %lastmod= page.published_at.strftime('%Y-%m-%d')
+  -@tags.each do |tag|
+    %url
+      %loc= absolute(tag_link(tag.slug))
+  -@archives.each do |archive|
+    %url
+      %loc= absolute(monthly_archive_link(archive.month, archive.year))
+  %url
+    %loc= absolute(archive_link())
+  %url
+    %loc= "#{root()}/"

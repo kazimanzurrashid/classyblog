@@ -1,0 +1,7 @@
+!!! XML
+%rsd{:version => '1.0'}
+  %service
+    %engineName= ClassyBlog::ApplicationInfo::Name
+    %homePageLink= ClassyBlog::ApplicationInfo::Home
+    %apis
+      %api{:name => 'MetaWeblog', :preferred => 'true', :apiLink => meta_web_log_link(), :blogID => @setting.id}

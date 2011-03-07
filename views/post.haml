@@ -1,0 +1,50 @@
+%article.article{:role => 'article'}
+  %header
+    %time{:datetime => @post.published_at_in_short_format}= @post.published_at_in_long_format
+    %h1= @post.title
+  %div= @post.content
+  %footer{:role => 'contentinfo'}
+    This post was published on
+    %time{:datetime => @post.published_at_in_short_format, :pubdate => true}= @post.published_at_in_long_format
+    = "by #{@setting.user_full_name}"
+    - unless @post.tags.empty?
+      under
+      - @post.tags.each_with_index do |tag, i|
+        - if  (i == @post.tags.length - 1) && (@post.tags.length > 1)
+          and
+        - elsif i > 0
+          %span>,
+        %a{:href => tag_link(tag.slug), :rel => 'tag'}= tag.title
+    %span<.
+    - unless @setting.disqus_short_name.blank?
+      You can skip to the end and 
+      %a{:href => '#dsq-form-area'} leave your comment.
+  - unless @setting.disqus_short_name.blank?
+    %section#comments
+      %h2 Comments
+      #disqus_thread
+      %script
+        :plain
+          (function() {
+            var dsq = document.createElement('script');
+            dsq.async = true;
+            dsq.src = "http://#{@setting.disqus_short_name}.disqus.com/embed.js";
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      %noscript
+        %span Please enable JavaScript to view the
+        %a{:href => "http://disqus.com/?ref_noscript=#{@setting.disqus_short_name}"} comments powered by Disqus.
+      %a{:href => 'http://disqus.com', :class=> 'dsq-brlink'}
+        %span blog comments powered by
+        %span{:class => 'logo-disqus'} Disqus
+- content_for :styles do
+  %link{:rel => 'stylesheet', :href => css_link('syntaxhighlighter/custom')}/
+- content_for :scripts do
+  %script{:src => js_link('syntaxhighlighter')}
+  %script
+    :plain
+      $(function() {
+        SyntaxHighlighter.defaults['toolbar'] = false;
+        SyntaxHighlighter.config.tagName = 'code';
+        SyntaxHighlighter.all();      
+      });

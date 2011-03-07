@@ -1,0 +1,41 @@
+%h1 Contact
+#contact
+  %p 
+    If you want to get in touch with me regarding my work, projects or just want to say Hi, fill out the following form and hit submit.
+  %form{:id => 'contactForm', :action => '', :method => 'post' }
+    -unless @success_message.blank?
+      .notification.success
+        %span
+          %strong Success!
+          =@success_message
+    -unless @error_message.blank?
+      .notification.error
+        %span
+          %strong Error!
+          =@error_message
+    %ul
+      %li
+        %label{:for => 'name'} Name (required)
+        %input#name{:name => 'name', :type => 'text', :size => '22', :maxlength => '256', :required => true, :placeholder => 'Your name...', :autofocus => true, :value => @contact.name, :data => {:message => 'Name cannot be blank.'}}/
+        = field_validation(@contact, :name)
+      %li
+        %label{:for => "email"} Email (required)
+        %input#email{:name => 'email', :type => 'email', :size => '22', :maxlength => '256', :required => true, :placeholder => 'Your email...', :value => @contact.email, :data => {:message => 'Email cannot be blank and must be in valid format.'}}/
+        = field_validation(@contact, :email)
+      %li
+        %label{:for => 'subject'} Subject (required)
+        %input#subject{:name => 'subject', :type => 'text', :size => '22', :maxlength => '256', :required => true, :placeholder => 'Your subject...', :value => @contact.subject, :data => {:message => 'Subject cannot be blank.'}}/
+        = field_validation(@contact, :subject)
+      %li
+        %label{:for => 'message'} Message (required)
+        %textarea#message{:name => 'message', :rows => '10', :cols => '100', :required => true, :placeholder => 'Your message...', :data => {:message => 'Message cannot be blank.'}}= @contact.message
+        = field_validation(@contact, :message)
+      %li
+        %button{:type => 'submit'} Submit
+- content_for :scripts do
+  %script{:src => js_link('jquery.tools.validator')}
+  %script
+    :plain
+      $(function() {
+        $('#contactForm').validator({ messageClass: 'field-validation-error', position: 'bottom right', offset: [-22, -60] });
+      });
